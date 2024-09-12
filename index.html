@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guitar Practice Page</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 20px;
+        }
+        #arrangement {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+        select {
+            font-size: 16px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guitar Practice Page</h1>
+    <div id="arrangement"></div>
+
+    <select id="accidentalOption">
+        <option value="none">None</option>
+        <option value="both">Both</option>
+        <option value="sharps">Only Sharps</option>
+        <option value="flats">Only Flats</option>
+    </select>
+
+    <button onclick="generateNewArrangement()">New Arrangement</button>
+
+    <script>
+        function generateNewArrangement() {
+            const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+            const accidentalOptions = document.getElementById("accidentalOption").value;
+            const arrangementElement = document.getElementById("arrangement");
+            let accidentals = [];
+
+            if (accidentalOptions === "both") {
+                accidentals = ['Db', 'D#', 'F#', 'Ab', 'A#'];
+            } else if (accidentalOptions === "sharps") {
+                accidentals = ['C#', 'D#', 'F#', 'G#', 'A#'];
+            } else if (accidentalOptions === "flats") {
+                accidentals = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
+            }
+
+            for (let i = 0; i < accidentals.length; i++) {				const randomIndex = Math.floor(Math.random() * (notes.length + 1));
+                notes.splice(randomIndex, 0, accidentals[i]);
+            }
+
+            for (let i = notes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [notes[i], notes[j]] = [notes[j], notes[i]];
+            }
+
+            arrangementElement.textContent = "Current Arrangement: " + notes.join(", ");
+        }
+
+        generateNewArrangement();
+    </script>
+</body>
+</html> 
