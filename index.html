@@ -40,7 +40,8 @@
             const accidentalOptions = document.getElementById("accidentalOption").value;
             const arrangementElement = document.getElementById("arrangement");
             let accidentals = [];
-
+        
+            // Define accidentals based on the selected option
             if (accidentalOptions === "both") {
                 accidentals = ['C#', 'Db', 'D#', 'Eb', 'F#', 'Gb', 'G#', 'Ab', 'A#', 'Bb'];
             } else if (accidentalOptions === "sharps") {
@@ -48,17 +49,18 @@
             } else if (accidentalOptions === "flats") {
                 accidentals = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
             }
-
-            for (let i = 0; i < accidentals.length; i++) {				const randomIndex = Math.floor(Math.random() * (notes.length + 1));
-                notes.splice(randomIndex, 0, accidentals[i]);
-            }
-
-            for (let i = notes.length - 1; i > 0; i--) {
+        
+            // Combine notes and accidentals into a single array
+            const allNotes = [...notes, ...accidentals];
+        
+            // Shuffle the array to ensure true randomization
+            for (let i = allNotes.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [notes[i], notes[j]] = [notes[j], notes[i]];
-            }
-
-            arrangementElement.textContent = "Current Arrangement: " + notes.join(", ");
+                [allNotes[i], allNotes[j]] = [allNotes[j], allNotes[i]];
+        }
+    
+        // Update the DOM with the new random arrangement
+        arrangementElement.textContent = "Current Arrangement: " + allNotes.join(", ");
         }
 
         generateNewArrangement();
